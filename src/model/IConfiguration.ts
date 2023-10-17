@@ -1,19 +1,17 @@
+import { IPlayer } from "./IPlayer";
 export interface IConfiguration {
-  playerNames: string[];
-  initialTime: number;
   roundTime: number;
+  hasInitialTime: boolean;
+  initialTime: number;
+  hasCap: boolean;
+  cap: number;
 }
 
-export const AddPlayer = (configuration: IConfiguration, name: string) => {
+export const resetPlayer = (configuration: IConfiguration, player: IPlayer) => {
   return {
-    ...configuration,
-    playerNames: configuration.playerNames.concat(name),
-  };
-};
-
-export const RemovePlayer = (configuration: IConfiguration, name: string) => {
-  return {
-    ...configuration,
-    playerNames: configuration.playerNames.filter((n) => n !== name),
+    ...player,
+    remaining: configuration.hasInitialTime
+      ? configuration.initialTime
+      : configuration.roundTime,
   };
 };
